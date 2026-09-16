@@ -1,53 +1,27 @@
 一、历史积累的数据 
   461 GB 原始语料
-目录	大小	文件	  字段	  说明
-data/	209 GB	39	"text"	中文网页，单文件约 5.7 GB
-train/	130 GB	25	"data"	字段名与其他不同，需统一
-sky/	123 GB	104	"text"	SkyPile 快照 2020-40 至 2021-04，内部约 5.3% 自重复
-valid/valid_sky.jsonl	2.9 MB	1	"text"	现成 held-out 验证集
-tmp/train/10w.jsonl	359 MB	1	"data"	现成小样本，冒烟测试直接用
+<img width="1315" height="303" alt="image" src="https://github.com/user-attachments/assets/b7d2e63b-236b-4a24-91eb-06cc9b2b8673" />
+
 
 三个主目录跨目录重复率低于 0.01%，可直接合并。用训练实际使用的 Qwen3 tokenizer 实测 4.0 bytes/token、1.54 字符/token，约 115 B tokens（早先按 248k 词表估的 105B 偏低）。
 
 二、做实验清洗好的数据
   91.8 GB 已清洗语料
-  来源	体量	类型	与 130 的关系
-sky 快照	53.7 GB	中文网页	净新增——2021-04_middle_0009 起的 38 个快照，与 130 的 102 个快照零交集
-baike	13.2 GB	百科词条	净新增，知识密度高
-tele-20	5.8 GB	中文网页	净新增
-tele-112	5.8 GB	中文网页	与 130 的 data/112.jsonl 同源，需去重
-tiger_bot	7.6 GB	书籍 / 长文	净新增，长文档来源
-wudao	4.5 GB	悟道语料	净新增
-mnvbc	0.9 GB	报刊	净新增
-wikipedia	0.5 GB	中文维基	净新增，质量最高的一份
-净新增合计	86.0 GB	≈ 21.5 B tokens。仅 tele-112 的 5.8 GB 与历史数据重复
+<img width="1319" height="484" alt="image" src="https://github.com/user-attachments/assets/4978ef18-3ff7-4a65-b91c-0faef752687c" />
+
 
   现有 547 GB 全是中文，且以网页为主。要让模型不止会中文续写，必须补英文、代码、数学，以及更多高质量中文。以下数据集的 ID 与体量均已在服务器上通过 modelscope API 实测确认。
 按样本实测的 token 密度重新核算后，下载量从 494 GB 降到 388.6 GB（442 个文件，8.3 小时，0 失败）。每个来源在全部候选文件里等间隔抽取，覆盖多个 dump/分片。样本分析发现两件事：中文教育数据本身由 IndustryCorpus2（25%）、CCI3（19%）、TeleChat（15%）、SkyPile（10%）、WuDao（5%）等拼成，与 CCI3-HQ、本地 SkyPile、197 的 tele/wudao 都有交集，跨来源去重必不可少；代码约 20% 带 <reponame> 等 StarCoder 元数据前缀，已在清洗时剥离。
 管线为两遍、中间不落地文本：第一遍按来源规则清洗后只算指纹（去空白后前 400 字符的 xxh64）；全局去重在 130 上汇总全部指纹、剔除验证集文档、重复时按「教科书 > 中文教育 > CCI3 > 已清洗网页 > 原始网页」保留一份；第二遍只 tokenize 保留的文档。前缀指纹能抓到被不同数据集清洗成略有差异的同一篇文档；局限是它不是 MinHash 近似去重，后者在两亿篇规模下留作后续改进。tokenizers 库与训练所用 AutoTokenizer 在 607 篇样本上逐 token 一致。  
 三、 外部数据
   modelscope 可用数据集
-  数据集	类型	仓库总量	格式
-opencsg/chinese-fineweb-edu-v2	中文教育高质量	607 GB	parquet ×631
-BAAI/CCI3-HQ	中文高质量网页	518 GB	jsonl ×680
-BAAI/IndustryCorpus2	30 类行业语料	1845 GB	parquet ×3206
-opencsg/chinese-cosmopedia	中文合成教科书	70 GB	parquet ×64
-AI-ModelScope/fineweb-edu	英文教育	5836 GB	parquet ×3038
-AI-ModelScope/starcoderdata	代码（86 种语言）	311 GB	parquet ×866
-AI-ModelScope/finemath	数学	149 GB	parquet ×293
-m-a-p/Matrix	中英混合大规模	19.9 TB	jsonl ×496
+<img width="1332" height="434" alt="image" src="https://github.com/user-attachments/assets/5e609a36-4b39-4337-816a-d71caa8885e8" />
+
 
   另有 opencsg/chinese-fineweb-edu(v1)、BAAI/CCI3-Data、BAAI/CCI-Data、bigcode/starcoderdata、EleutherAI/proof-pile-2、HuggingFaceFW/fineweb-edu 同样可下。所有仓库体量都远超需求，只需按配比取子集。
 四、目标数据配比
-一 · pretrain/	中文网页	95 B	38%	0（已有）
-二 · pt/train 去重后	中文混合（已清洗）	19 B	8%	0（局域网传 86 GB）
-chinese-fineweb-edu-v2	中文教育	45 B	18%	~145 GB
-CCI3-HQ	中文高质量	20 B	8%	~88 GB
-chinese-cosmopedia	中文教科书	12 B	5%	~56 GB
-fineweb-edu	英文教育	30 B	12%	~135 GB
-starcoderdata	代码	18 B	7%	~22 GB
-finemath	数学	11 B	4%	~48 GB
-合计	中文 77% / 英文 12% / 代码 7% / 数学 4%	250 B	100%	~494 GB
+<img width="1319" height="480" alt="image" src="https://github.com/user-attachments/assets/6a9e84b8-79db-4180-bfcc-af5c3e535ab9" />
+
 
   token 池收到 200B（产物 800 GB）——0.6B 方案下 200B tokens 预计需要 48 天训练工作量
 
