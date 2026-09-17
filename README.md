@@ -2,46 +2,20 @@
 使用200B Tokens，4090 NVIDIA卡，从头训练0.6B的qwen3架构的大模型，和qwen3-0.6B进行性能对比
 
 # 2026/9/17
+<img width="1495" height="213" alt="image" src="https://github.com/user-attachments/assets/8945b880-7522-4a14-9d6f-0518b6221852" />
 
 
 ## 训练曲线
+<img width="1492" height="467" alt="image" src="https://github.com/user-attachments/assets/bbd82a02-e14f-4398-b3de-ebca9aa172c6" />
 
 
 ## 梯度范数/学习率
+<img width="1498" height="374" alt="image" src="https://github.com/user-attachments/assets/4144ae8a-b24d-405e-8914-2a1330186267" />
 
 
 ## 吞吐量
+<img width="1495" height="387" alt="image" src="https://github.com/user-attachments/assets/4d68a562-15c4-4af7-95a6-70e6a8966b25" />
 
-# 2026/9/16
-<img width="1489" height="208" alt="image" src="https://github.com/user-attachments/assets/4f76d1d9-332a-4dee-83b3-c09cf51f905f" />
-
-
-## 训练曲线
-<img width="1496" height="470" alt="image" src="https://github.com/user-attachments/assets/85901dc3-ce8e-40f5-aa66-ef3a41d4a501" />
-
-
-## 梯度范数/学习率
-<img width="1498" height="379" alt="image" src="https://github.com/user-attachments/assets/f721d151-5f9c-426c-9c1a-1ec53f1d5f86" />
-
-
-## 吞吐量
-<img width="1497" height="383" alt="image" src="https://github.com/user-attachments/assets/48aa0f7e-a746-4631-92ce-7a08515c4948" />
-
-
-# 2026/9/15
-
-<img width="1496" height="213" alt="image" src="https://github.com/user-attachments/assets/6b751990-fc52-48e0-a8e0-664c9519bb52" />
-
-
-## 训练曲线
-<img width="1490" height="473" alt="image" src="https://github.com/user-attachments/assets/80e0a01d-aebf-4635-b27b-45eff3836f0e" />
-
-
-## 梯度范数/学习率
-<img width="1497" height="375" alt="image" src="https://github.com/user-attachments/assets/419218b6-218a-4c7a-a88f-4f42e0bf712f" />
-
-## 吞吐量
-<img width="1494" height="381" alt="image" src="https://github.com/user-attachments/assets/3bd9ab61-6012-4936-8380-2af45b02d5e1" />
 
 
 # 2026/9/14
