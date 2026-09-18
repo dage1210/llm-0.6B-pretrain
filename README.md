@@ -1,20 +1,22 @@
 # llm-0.6B-pretrain
 使用200B Tokens，4090 NVIDIA卡，从头训练0.6B的qwen3架构的大模型，和qwen3-0.6B进行性能对比
 
-# 2026/9/17
-<img width="1495" height="213" alt="image" src="https://github.com/user-attachments/assets/8945b880-7522-4a14-9d6f-0518b6221852" />
+# 2026/9/18
+
+<img width="1498" height="216" alt="image" src="https://github.com/user-attachments/assets/1bb42183-51ed-4719-ba9d-a4bf893b82a6" />
 
 
 ## 训练曲线
-<img width="1492" height="467" alt="image" src="https://github.com/user-attachments/assets/bbd82a02-e14f-4398-b3de-ebca9aa172c6" />
+<img width="1506" height="466" alt="image" src="https://github.com/user-attachments/assets/9f1926f0-42ca-419a-93c2-68ade98b6021" />
+
 
 
 ## 梯度范数/学习率
-<img width="1498" height="374" alt="image" src="https://github.com/user-attachments/assets/4144ae8a-b24d-405e-8914-2a1330186267" />
+
+<img width="1494" height="375" alt="image" src="https://github.com/user-attachments/assets/a3eac843-87d0-4f25-a9dd-aef31b39b0c0" />
 
 
-## 吞吐量
-<img width="1495" height="387" alt="image" src="https://github.com/user-attachments/assets/4d68a562-15c4-4af7-95a6-70e6a8966b25" />
+
 
 
 
